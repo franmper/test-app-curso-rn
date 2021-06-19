@@ -1,11 +1,29 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
+import {flatListArray} from "./array"
 
-export default function App() {
+export default function App(props) {
+  const [variable, setVariable] = useState("hola")
+
+  const funcion = () => {
+    setVariable("hola 2")
+  }
+
+  useEffect(() => {
+    console.log(flatListArray)
+    return () => console.log("desmontado")
+  }, [])
+
+  useEffect(() => {
+    console.log("cambio variable ", variable)
+    return () => console.log("desmontado")
+  }, [variable])
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>{variable}</Text>
+      <Pressable style={{padding: 10, backgroundColor:"red" }} onPress={() => funcion()}><Text>Cambiar</Text></Pressable>
       <StatusBar style="auto" />
     </View>
   );
