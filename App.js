@@ -1,36 +1,30 @@
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  SafeAreaView,
-  TextInput,
-  Button,
-  TouchableOpacity,
-  SectionList,
-  ScrollView,
-  Image,
-  Modal,
-  ActivityIndicator,
-  StatusBar
-} from "react-native";
-import { flatListArray, sectionListArray } from "./array";
+import { StyleSheet, Text, View, StatusBar, Dimensions, useWindowDimensions } from "react-native";
+import { flatListArray } from "./array";
 
-const altoStatusBar = StatusBar.currentHeight
+const altoStatusBar = StatusBar.currentHeight;
 
 export default function App(props) {
+  const dimen = useWindowDimensions()
+
   const [variable, setVariable] = useState("hola");
+  const [width, setWidth] = useState(dimen.width);
   const [visible, setVisible] = useState(false);
+
 
   const funcion = () => {
     setVariable("hola 2");
   };
 
+  // useEffect(() => {
+  //   console.log(Dimensions.get("window"));
+  //   return () => console.log("desmontado");
+  // }, []);
+
   useEffect(() => {
-    console.log(flatListArray);
-    return () => console.log("desmontado");
-  }, []);
+    console.log(dimen);
+    setWidth(dimen.width);
+  }, [dimen]);
 
   useEffect(() => {
     console.log("cambio variable ", variable);
@@ -39,8 +33,8 @@ export default function App(props) {
 
   return (
     <View style={styles.container}>
-      <Text style={{fontSize: 40, fontWeight: "bold", fontStyle: "italic", color: "white"}}>{variable}</Text>
-      
+      <Text style={styles.textStyle}>{variable}</Text>
+      <View style={[styles.box, {width: width * 0.8}]} />
     </View>
   );
 }
@@ -49,6 +43,26 @@ const styles = StyleSheet.create({
   container: {
     marginTop: altoStatusBar,
     flex: 1,
-    backgroundColor: "red"
+    backgroundColor: "white",
+  },
+  textStyle: {
+    fontSize: 40,
+    fontWeight: "bold",
+    fontStyle: "italic",
+    color: "black",
+    margin: 20,
+    textDecorationLine: "underline",
+    textTransform: "uppercase",
+  },
+  box: {
+    width: 200,
+    height: 200,
+    backgroundColor: "blue",
+    shadowColor: "red",
+    shadowOffset: { width: 10, height: 10 },
+    shadowOpacity: 0.7,
+    shadowRadius: 10,
+    elevation: 2,
+    alignSelf: "center",
   },
 });
